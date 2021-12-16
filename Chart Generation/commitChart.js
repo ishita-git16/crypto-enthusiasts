@@ -1,27 +1,34 @@
 import ChartJSImage from 'chart.js-image';
 
 const commitData = (weeksArr) => {
-    var monthlyCommits = [];
+    var monthlyCommits = new Array(12).fill(0);
     var currDate, prevDate;
-    for (var i = weeksArr.length - 1; i >= weeksArr.length - 80;) {
-
-        currDate = new Date(weeksArr[i].w * 1000);
-        var oneMonthData = 0;
-        while (1) {
-            if (i < weeksArr.length - 80) break;
-            prevDate = new Date(weeksArr[i].w * 1000);
-            if (prevDate.getMonth() != currDate.getMonth()) {
-
-                break;
+    weeksArr.forEach(author => {
+        // console.log(author.weeks[0]);
+        var i = author.weeks.length - 1;
+        for (var month = 12; month >= 1;) {
+            console.log((author.weeks[i]).w);
+            currDate = new Date((author.weeks[i]).w * 1000);
+            var oneMonthData = 0;
+            while (1) {
+                if(month < 1) break;
+                // if (i < author.weeks.length - 80) break;
+                prevDate = new Date((author.weeks[i]).w * 1000);
+                if (prevDate.getMonth() != currDate.getMonth()) {
+    
+                    break;
+                }
+                else {
+                    oneMonthData += (author.weeks[i]).c;
+                    // console.log("break");
+                }
+                i--;
             }
-            else {
-                oneMonthData += weeksArr[i].c;
-                // console.log("break");
-            }
-            i--;
+            monthlyCommits[month-1] += oneMonthData;
+            month--;
         }
-        monthlyCommits.unshift(oneMonthData);
-    }
+    });
+    
     return monthlyCommits;
 }
 
