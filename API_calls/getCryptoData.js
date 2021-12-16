@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-
+import Chart from "chart.js";
 
 const getCryptoData = async (link) => {
     const resp = await fetch(link);
@@ -7,6 +7,9 @@ const getCryptoData = async (link) => {
     return res;
     console.log(res.following_url);
 }
+
+
+
 
 
 export default getCryptoData;
